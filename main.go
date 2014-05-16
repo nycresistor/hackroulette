@@ -8,6 +8,7 @@ import (
 )
 
 const listenAddr = ":4000"
+var telnetOneChar []byte = []byte("\377\375\042\377\373\001")
 
 var partner = make(chan io.ReadWriteCloser)
 
@@ -24,6 +25,8 @@ func match(c io.ReadWriteCloser) {
 func chat(a, b io.ReadWriteCloser) {
     defer a.Close()
     defer b.Close()
+    a.Write(telnetOneChar)
+    b.Write(telnetOneChar)
     fmt.Fprintln(a, "Found one! Say hi.")
     fmt.Fprintln(b, "Found one! Say hi.")
     go io.Copy(a, b)
