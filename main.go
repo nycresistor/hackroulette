@@ -22,6 +22,8 @@ func match(c io.ReadWriteCloser) {
 }
 
 func chat(a, b io.ReadWriteCloser) {
+    defer a.Close()
+    defer b.Close()
     fmt.Fprintln(a, "Found one! Say hi.")
     fmt.Fprintln(b, "Found one! Say hi.")
     go io.Copy(a, b)
